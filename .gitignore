@@ -1,0 +1,11 @@
+__pycache__/
+*.py[cod]
+*$py.class
+*.log
+.agents/
+.gemini/
+scratch/
+run_*_output.csv
+scratch_eval_output.csv
+.DS_Store
+Thumbs.db
