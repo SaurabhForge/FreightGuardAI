@@ -1,8 +1,6 @@
 # FreightGuard AI — Smart Assistant That Watches Shipping Costs
 
 > **FreightTiger 24-Hour AI Case Study Submission**  
-> *Role:* Software Engineering Intern (AI)  
-> *Candidate:* **Saurabh Kumar** (sk1300374@gmail.com · GitHub: [@SaurabhForge](https://github.com/SaurabhForge))  
 > *Status:* Production Ready · 100% Eval Pass (7/7) · 100% Deterministic Reproducibility  
 
 ---
