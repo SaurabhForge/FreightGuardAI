@@ -9,3 +9,14 @@ run_*_output.csv
 scratch_eval_output.csv
 .DS_Store
 Thumbs.db
+node_modules/
+cdk.out/
+.cache/
+.cli/
+.env.local
+staging/
+freightguard/agentcore/**/staging/
+freightguard/agentcore/.cache/
+freightguard/agentcore/.cli/
+freightguard/agentcore/cdk/node_modules/
+freightguard/agentcore/cdk/cdk.out/

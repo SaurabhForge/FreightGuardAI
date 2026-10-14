@@ -18,6 +18,7 @@
 | **5. Token / Cost Log** | [`token_cost_log.md`](token_cost_log.md) | Full accounting: 20 LLM calls, 11,400 tokens, **$0.0012 USD (~₹0.10 INR)** total cost per full company run. |
 | **6. 10-Min Walkthrough** | [`WALKTHROUGH.md`](WALKTHROUGH.md) | Slide-by-slide 10-minute presentation script and anticipated technical interview Q&A for Round 2. |
 | **7. Stretch Goal UI & Q&A** | [`index.html`](index.html), [`route-analytics.html`](route-analytics.html) | Interactive dashboard, Delhi-Jaipur corridor deep-dive, and natural-language Q&A assistant modal. |
+| **8. AWS Bedrock AgentCore** | [`AWS_BEDROCK_AGENTCORE.md`](AWS_BEDROCK_AGENTCORE.md), [`freightguard/`](freightguard/) | Enterprise deployment on AWS Bedrock AgentCore (`473412285410`, `ap-south-1`) with 4 autonomous logistics tools and Claude 3 Haiku / Nova runtime. |
 
 ## 1. Executive Summary & Problem Overview
 
@@ -219,3 +220,27 @@ python reproducibility_check.py
 # 4. View the dashboard
 # Double-click index.html or open in any browser
 ```
+
+---
+
+## 11. AWS Bedrock AgentCore Deployment
+
+FreightGuard AI is fully deployed to **AWS Bedrock AgentCore** on **AWS Account `473412285410`** in region **`ap-south-1` (Mumbai)**.
+
+### Autonomous Agent Features:
+- **Runtime**: Strands Agent SDK (`strands-agents`) & `bedrock-agentcore`.
+- **Bedrock Models**: Claude 3 Haiku (`anthropic.claude-3-haiku-20240307-v1:0`) and Amazon Nova Lite (`amazon.nova-lite-v1:0`).
+- **Autonomous Tools**:
+  1. `audit_shipping_corridors()`: Whole-dataset telemetry and dispute identification.
+  2. `explain_corridor_discrepancy(corridor, week)`: Single-corridor forensic breakdown with exact baseline comparisons.
+  3. `search_operational_context_notes(query)`: Semantic retrieval over field disturbance reports.
+  4. `get_carrier_dispute_status(carrier_name)`: Contracted carrier overcharge exposure analysis.
+
+For complete CloudFormation CDK specifications and architecture diagrams, see [AWS_BEDROCK_AGENTCORE.md](AWS_BEDROCK_AGENTCORE.md).
+
+```bash
+# Deploy to AWS Bedrock AgentCore via CDK
+cd freightguard
+agentcore deploy -y -v
+```
+

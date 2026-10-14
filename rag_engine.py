@@ -175,12 +175,34 @@ class NotesVectorStore:
 
 
 class SmartAssistant:
-    """Natural Language Assistant answering plain English questions using detection findings and RAG."""
+    """Natural Language Assistant answering plain English questions using detection findings and RAG.
+    Equipped with AWS Bedrock Foundation Model integration with deterministic fallback.
+    """
 
     def __init__(self, anomalies_csv: str = "AI Intern Case Study/flagged_anomalies.csv",
                  notes_csv: str = "AI Intern Case Study/context_notes.csv"):
         self.df_anomalies = pd.read_csv(anomalies_csv)
         self.vector_store = NotesVectorStore(notes_csv)
+
+    def query_bedrock_llm(self, prompt: str, system_prompt: str = "") -> str:
+        """Invokes Amazon Bedrock Runtime with graceful fallback to deterministic RAG."""
+        try:
+            import boto3
+            import json
+            client = boto3.client('bedrock-runtime', region_name=os.getenv('AWS_DEFAULT_REGION', 'ap-south-1'))
+            model_id = os.getenv('BEDROCK_MODEL_ID', 'anthropic.claude-3-haiku-20240307-v1:0')
+            payload = {
+                'anthropic_version': 'bedrock-2023-05-31',
+                'max_tokens': 350,
+                'messages': [{'role': 'user', 'content': prompt}]
+            }
+            if system_prompt:
+                payload['system'] = system_prompt
+            resp = client.invoke_model(modelId=model_id, body=json.dumps(payload))
+            res_json = json.loads(resp['body'].read().decode('utf-8'))
+            return res_json.get('content', [{}])[0].get('text', '')
+        except Exception:
+            return ""
 
     def answer_question(self, question: str) -> dict:
         q_lower = question.lower()
